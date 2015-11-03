@@ -8,11 +8,15 @@ class Vertex{
 
 public:
 	//constructor
-	Vertex(){name = "";}
+	Vertex(){
+		name = "";
+		//neighborVector.clear();
+		neighborVector.reserve(20000);
+	}
 	Vertex(string input){
 		name = input;
 		//initilizing vector
-		neighborVector.clear();
+		//neighborVector.clear();
 		neighborVector.reserve(20000);
 	}
 
@@ -43,8 +47,9 @@ void Vertex::print(){
 void Vertex::printNeighbor(){
 	for (int i = 0; i < neighborVector.size(); i ++){
 		cout << neighborVector[i];
+		cout << "1" << endl;
 	}
-	cout << "" << endl;
+	cout << "1" << endl;
 }
 
 bool Vertex::isNeighbor(string name){
@@ -126,18 +131,21 @@ void Graph::insert(vector<string> v){
 		if(search(v[i]) == -1){
 			insert(v[i]);
 		}
-		
 	}
 
 	pIndex = search(v[0]);//index of first item in v which is parent
 	cout <<"pindex: "<< pIndex << endl;
-	for ( int i = 1; i < v.size(); i ++){//add rest items in to parent's neighbor list
-		//cout << v[i];
-		cout <<"size before: "<< adj_List[pIndex]->getNeighborVector().size() << endl;
-		adj_List[pIndex]->getNeighborVector().push_back(v[i]);
-		cout <<"size after: "<< adj_List[pIndex]->getNeighborVector().size() << endl;
-
+	vector<string> *v2 = NULL;
+	
+	for ( int i = 1; i < v.size(); i ++){//add rest items in to parent's neighbor list\
+		//vector<string> *v2 = NULL;
+	std::vector<string> v3 = adj_List[pIndex]->getNeighborVector();
+	v2 = &v3;
+		cout <<"size before: "<< v2->size() << endl;
+		v2->push_back(v[i]);
+		cout <<"size after: "<< v2->size() << endl;
 	}
+	//adj_List[pIndex]->getNeighborVector() = v3;
 }
 //traverse though adj_List and count how many neighbors each vertex has
 //return vertex with max number of neighbors
@@ -166,8 +174,6 @@ Vertex * findCommomAncestor(Vertex *v1, Vertex *v2){
 }
 
 */
-
-
 
 int main()
 {
